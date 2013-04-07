@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="editor">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/global.css" />
+    <link type="text/css" rel="stylesheet" href="../assets/css/color-button.css" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="stylesheet" href="../assets/js/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="../assets/js/codemirror/theme/monokai.css">
+  	<link rel="stylesheet" href="../assets/js/codemirror/theme/ambiance.css">
+  	
+    <script src="../assets/js/codemirror/lib/codemirror.js"></script>
+    <script src="../assets/js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="../assets/js/codemirror/mode/css/css.js"></script>
+    <script src="../assets/js/codemirror/mode/xml/xml.js"></script>
+    <script src="../assets/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    
+    <script src="../assets/js/jquery-1.9.1.min.js"></script>
+      
+</head>
+
+      <body style="overflow:hidden">
+
+    <script type="text/ng-template" id="tree_item_renderer.html">
+        <i ng-class="{'icon-folder-open':data.expanded,'icon-folder-close':!data.expanded}"></i><a ng-click="onFolderSelected(data)">{{data.name}}</a>
+        <div ng-show="data.expanded">
+            <ul>
+                <li ng-repeat="data in data.folders" ng-include="'tree_item_renderer.html'"></li>
+            </ul>
+            <ul>
+                <li ng-repeat="file in data.files">
+                    <i class="icon-file"></i><a ng-click="onFileSelected(file.path)">{{file.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="Explorer.html">
+      <div class="widget" ng-controller="explorerController" id="browser" style="overflow:auto;height:{{component.height}}px;min-width:300px">
+          <ul>
+              <li ng-repeat="data in explorer" ng-include="'tree_item_renderer.html'"></li>
+          </ul>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="Editor.html">
+      <div class="widget" ng-controller="editorController" id="editor">
+          <ul class="nav nav-tabs">
+              <li ng-class="{active:i.selected}" ng-repeat="i in documents"><a href="#" ng-click="onTabSelected(i.path)">{{i.name}}</a></li>
+          </ul>
+          <div ng-editor/>
+      </div>
+    </script>
+
+    <script type='text/ng-template' id='area.html'> 
+      <div class="area" style='width:{{component.width}}px;height:{{component.height}}px;position:absolute;top:{{component.top}}px;left:{{component.left}}px;overflow:hidden'> 
+          <div ng-repeat="component in component.components">
+            <ng-include src="component.template"/>
+          </div>
+      </div> 
+    </script>
+
+<script src="../Infrastructure/NodeFilesAccess.js"></script>        
+<script type="text/javascript">
+
+var radio = require("radio");
+var editor = new (require("Editor"))(fileOpener, radio, fileSaver);
+var explorer = new (require("Explorer"))(fileOpener, filesLister, radio);
+
+window.compo = {
+        widthExpr:"100%",
+        heightExpr:"100%",
+        top:0,
+        left:0,
+        template:"area.html",
+        components:[{
+            orientation:'left',
+            widthExpr:"300",
+            heightExpr:"100%",
+            top:0,
+            left:0,
+            template:"area.html",
+            components:[{
+              heightExpr:"100%",
+              explorer:explorer,
+              template:"Explorer.html"
+            }]
+        },{
+            orientation:'right',
+            widthExpr:"100%",
+            heightExpr:"100%",
+            top:0,
+            left:300,
+            template:"area.html",
+            components:[{
+              heightExpr:"100%",
+              widthExpr:"100%",
+              editor:editor,
+              template:"Editor.html"
+            }]
+        }]
+    };
+
+function reflow(compo,parent){
+  if(parent){
+    if(compo.heightExpr == "100%"){
+      compo.height = parent.height;
+    }
+    else if(typeof(compo.heightExpr) === "number"){
+      compo.height = compo.heightExpr;
+    }
+    
+    if(compo.widthExpr == "100%"){
+      compo.width = parent.width - 300;
+    }
+    else if(typeof(compo.widthExpr) === "number"){
+      compo.width = compo.widthExpr;
+    }
+    
+  }
+  if(compo.components){
+    var i;
+    for(i = 0; i < compo.components.length; i++){
+      reflow(compo.components[i], compo);
+    }
+  }
+}
+
+
+function Main($scope){
+    $scope.component = window.compo;
+    refresh = function(code){$scope.$apply(code);};
+}
+
+$(function(){
+
+  reflow(window.compo);
+
+  
+
+  $(window).resize(function(){
+
+      	refresh(function(){
+      	window.compo.height = $(window).height();
+      	window.compo.width = $(window).width();
+    	  reflow(window.compo);
+	    });
+
+  });
+});
+
+</script>
+
+ 
+
+
+        <div class="" style="position:relative">
+          <div id="main" ng-controller="Main" ng-include="'area.html'" ></div>
+        </div>
+    <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/custom.js"></script>
+
+    
+    <script src="controllers/Editor.js"></script>
+    <script src="controllers/Explorer.js"></script>
+    <script src="../assets/js/angular.min.js"></script>
+    <script src="../assets/js/amplify.min.js"></script>
+    <script>
+      var modes = {};
+      modes.html = "htmlmixed";
+      modes.js = "javascript";
+      modes.css = "css";
+      modes.xml = "xml";
+      
+        angular.module('editor', [])
+               .directive('ngEditor', function () {
+                   return function (scope, element, attrs) {
+                         var docs = [];
+                         var currentDoc;
+
+                         var cm = CodeMirror(element[0], {
+                            theme:"ambiance" ,
+                            lineNumbers: true, 
+                             extraKeys: {
+                                "Ctrl-S": function(instance) { 
+                                    currentDoc.content = instance.getValue();
+                                    radio("SaveCurrentDocument").broadcast(currentDoc);
+                                },
+                            }
+                        });
+
+                        radio("DocumentSelected").subscribe(function(doc){
+                          currentDoc = doc;
+                          cm.swapDoc(docs[doc.path]);
+                          cm.focus();
+                        });
+
+                        radio("DocumentLoaded").subscribe(function(doc){
+                          var extIdx = doc.path.indexOf(".");
+                          var mode;
+                          if(extIdx >= 0 )mode = modes[ doc.path.substr( extIdx  + 1 ) ];
+                          docs[doc.path] = CodeMirror.Doc(doc.content,mode);
+                        });
+
+                     var resize = function(){
+                        var $element = $(element);
+                        var $parent = $element.closest(".area");
+                        cm.setSize($parent.width(), $parent.height() - $element.position().top );
+                    };
+                      resize();
+                     $(window).resize(resize);
+                   };
+               });
+	
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "nw-demo",
+  "main": "AngularJsClient/index.html",
+  "window": {
+    "toolbar": true,
+    "position": "center",
+    "width": 800,
+    "height": 600,
+    "min_width": 220,
+    "min_height": 220
+  },
+  "dependencies": {
+    "radio": "~0.2.0",
+    "chai": "~1.5.0",
+    "mocha": "~1.8.2"
+  }
+}
