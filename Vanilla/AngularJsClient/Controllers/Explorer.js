@@ -8,5 +8,5 @@ function explorerController($scope) {
         $scope.component.explorer.selectFolder(folder);
     }
 
-    $scope.explorer = $scope.component.explorer.tree;
+    $scope.folders = $scope.component.explorer.folders;
 }

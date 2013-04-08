@@ -36,13 +36,13 @@
       <body style="overflow:hidden">
 
     <script type="text/ng-template" id="tree_item_renderer.html">
-        <i ng-class="{'icon-folder-open':data.expanded,'icon-folder-close':!data.expanded}"></i><a ng-click="onFolderSelected(data)">{{data.name}}</a>
-        <div ng-show="data.expanded">
+        <i ng-class="{'icon-folder-open':folder.expanded,'icon-folder-close':!folder.expanded}"></i><a ng-click="onFolderSelected(folder)">{{folder.name}}</a>
+        <div ng-show="folder.expanded">
             <ul>
-                <li ng-repeat="data in data.folders" ng-include="'tree_item_renderer.html'"></li>
+                <li ng-repeat="folder in folder.folders" ng-include="'tree_item_renderer.html'"></li>
             </ul>
             <ul>
-                <li ng-repeat="file in data.files">
+                <li ng-repeat="file in folder.files">
                     <i class="icon-file"></i><a ng-click="onFileSelected(file.path)">{{file.name}}</a>
                 </li>
             </ul>
@@ -52,7 +52,7 @@
     <script type="text/ng-template" id="Explorer.html">
       <div class="widget" ng-controller="explorerController" id="browser" style="overflow:auto;height:{{component.height}}px;min-width:300px">
           <ul>
-              <li ng-repeat="data in explorer" ng-include="'tree_item_renderer.html'"></li>
+              <li ng-repeat="folder in folders" ng-include="'tree_item_renderer.html'"></li>
           </ul>
       </div>
     </script>

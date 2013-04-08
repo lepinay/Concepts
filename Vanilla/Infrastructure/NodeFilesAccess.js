@@ -5,10 +5,25 @@ function filesLister(path) {
     var allFiles = fs.readdirSync(path);
     return {
         files: allFiles
-            .filter(function (f) { return fs.statSync(path + f).isFile(); })
+            .filter(function (f) { 
+                try{
+                    return fs.statSync(path + f).isFile(); 
+                }
+                catch(e){
+                    return false;
+                }
+            })
             .map(function (f) { return { name: f, path: path+f } }),
         folders: allFiles
-            .filter(function (f) { return fs.statSync(path + f).isDirectory(); })
+            .filter(function (f) { 
+                try{
+                    return fs.statSync(path + f).isDirectory();     
+                }
+                catch(e){
+                    return false;
+                }
+                
+            })
             .map(function (f) { return {expanded:false,files:[],folders:[],name:f,path:path+f+"/"} })
     };
 };
