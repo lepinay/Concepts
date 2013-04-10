@@ -1,12 +1,17 @@
+
 function editorController($scope) {
+	
+	var radio = require("radio");  
+  
+    $scope.editor = new (require("Editor"))(fileOpener, radio, fileSaver);
 
     $scope.onTabSelected = function( path ){
-        $scope.component.editor.selectEditor(path);
+        $scope.editor.selectEditor(path);
     }
 
     $scope.saveCurrentDocument = function(){
-    	$scope.component.editor.saveCurrentDocument();
+    	$scope.editor.saveCurrentDocument();
     }
 
-    $scope.documents = $scope.component.editor.documents;
+    $scope.documents = $scope.editor.documents;
 }

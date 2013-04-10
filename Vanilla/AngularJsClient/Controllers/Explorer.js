@@ -1,12 +1,16 @@
 function explorerController($scope) {
+  
+  	var radio = require("radio");
+  
+    $scope.explorer = new (require("Explorer"))(fileOpener, filesLister, radio);
 
     $scope.onFileSelected = function (file) {
-        $scope.component.explorer.selectFile(file);
+        $scope.explorer.selectFile(file);
     }
 
     $scope.onFolderSelected = function (folder) {
-        $scope.component.explorer.selectFolder(folder);
+        $scope.explorer.selectFolder(folder);
     }
 
-    $scope.folders = $scope.component.explorer.folders;
+    $scope.folders = $scope.explorer.folders;
 }
