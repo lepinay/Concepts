@@ -31,6 +31,8 @@
     <script src="../assets/js/codemirror/mode/sql/sql.js"></script>
     
     <script src="../assets/js/jquery-1.9.1.min.js"></script>
+  
+    <script src="../assets/js/bacon.js"></script>
       
 </head>
 
@@ -63,6 +65,9 @@
       modes.css = "css";
       modes.xml = "xml";
       modes.sql = "sql";
+      
+      
+      
       
         angular.module('editor', [])
                .directive('ngEditor', function () {
@@ -100,7 +105,8 @@
                         cm.setSize($parent.width(), $parent.height() - $element.position().top );
                     };
                       resize();
-                      $(window).resize(resize);
+                      radio("Reflow").subscribe(resize);
+
                    };
                });
 	
@@ -119,6 +125,8 @@
             </ul>
         </div>
     </script>
+        
+        
 
     <style type="text/css">
       #main
@@ -131,9 +139,17 @@
 
       #browser
       {
-        -webkit-flex: 1;
+        -webkit-flex-basis: 300px;
+        
         position: relative;
         overflow:auto;
+      }
+      
+      #handle
+      {
+        -webkit-flex-basis: 7px;
+        background-color:#45484c;
+        cursor:w-resize;
       }
 
       #editor
@@ -145,10 +161,12 @@
 
       <div id="main">
         <div ng-controller="explorerController" id="browser">
-            <ul style="position:absolute">
+            <ul style="position:absolute;-webkit-user-select:none;">
                 <li ng-repeat="folder in folders" ng-include="'tree_item_renderer.html'"></li>
             </ul>
         </div>
+        
+        <div id="handle"></div>
   
         <div ng-controller="editorController" id="editor">
           <div style="position:absolute">
@@ -167,7 +185,28 @@
             var main = $("#main");
             main.width(w.width());
             main.height(w.height());
+            radio("Reflow").broadcast();
           });
+          
+          var mouseDown = $("#handle").asEventStream("mousedown");
+          var mouseUp = $("body").asEventStream("mouseup");
+          var mouseMove = $("body").asEventStream("mousemove");
+          
+          mouseDown.onValue(function(e){
+            var lastx = e.clientX;
+            mouseMove.takeUntil(mouseUp).onValue(function(e){
+              var delta = (e.clientX - lastx);
+              lastx = e.clientX;
+              var browser = $("#browser");
+              browser.css("-webkit-flex-basis", (browser.width() + delta)+"px");
+              radio("Reflow").broadcast();
+            });
+          });
+          
+          radio("DocumentSelected").subscribe(function(d){
+            $("title").html(d.path);
+          });
+          
         });
       </script>
 
