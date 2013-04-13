@@ -7,11 +7,11 @@ function editorController($scope) {
 
     $scope.onTabSelected = function( path ){
         $scope.editor.selectEditor(path);
-    }
+    };
 
     $scope.saveCurrentDocument = function(){
-    	$scope.editor.saveCurrentDocument();
-    }
+        $scope.editor.saveCurrentDocument();
+    };
 
     $scope.documents = $scope.editor.documents;
 }
