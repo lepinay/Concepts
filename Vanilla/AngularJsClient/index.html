@@ -33,7 +33,7 @@
         <li ng-repeat="folder in folders" ng-include="'tree_item_renderer.html'"></li>
       </ul>
     </div>
-    <!--<div id="handle"></div>-->
+    <div id="handle"></div>
     <div ng-controller="editorController" id="editor">
       <div style="position:absolute">
         <ul class="nav nav-tabs">
@@ -80,7 +80,7 @@
       modes.js = "javascript";
       modes.css = "css";
       modes.xml = "xml";
-      modes.sql = "sql";
+      modes.sql = "text/x-sql";
       
         angular.module('editor', [])
                .directive('ngEditor', function () {
@@ -156,9 +156,9 @@
       #browser
       {
         -webkit-flex-basis: 300px;
-            resize:horizontal;
-        position: relative;
-        overflow:auto;
+            /*resize:horizontal;*/
+            position: relative;
+            overflow:auto;
       }
       
       #handle
@@ -193,7 +193,7 @@
                 radio("Reflow").broadcast();
             });
           
-            /*var mouseDown = $("#handle").asEventStream("mousedown");
+            var mouseDown = $("#handle").asEventStream("mousedown");
           var mouseUp = $("body").asEventStream("mouseup");
           var mouseMove = $("body").asEventStream("mousemove");
           
@@ -206,7 +206,7 @@
               browser.css("-webkit-flex-basis", (browser.width() + delta)+"px");
               radio("Reflow").broadcast();
             });
-          });*/
+          });
           
           radio("DocumentSelected").subscribe(function(d){
             $("title").html(d.path);
