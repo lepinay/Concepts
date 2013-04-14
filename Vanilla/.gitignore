@@ -1,9 +1,0 @@
-*.log
-*.exe
-*.lnk
-*.zip
-node_modules/.bin
-node_modules/chai
-node_modules/mocha
-node_modules/radio
-nw

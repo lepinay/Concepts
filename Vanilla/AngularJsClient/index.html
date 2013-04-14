@@ -29,7 +29,7 @@
 <body style="overflow:hidden">
   <div id="main">
     <div ng-controller="explorerController" id="browser">
-      <ul style="position:absolute;-webkit-user-select:none;">
+        <ul style="position:absolute">
         <li ng-repeat="folder in folders" ng-include="'tree_item_renderer.html'"></li>
       </ul>
     </div>
@@ -151,6 +151,7 @@
         border-style: solid;
         border-color: white;
         border-width: 2px;
+        -webkit-user-select:none;
       }
 
       #browser
@@ -170,7 +171,7 @@
 
       #editor
       {
-        -webkit-flex: 5;
+        -webkit-flex: 1;
         position: relative;
       }
         
@@ -193,7 +194,7 @@
                 radio("Reflow").broadcast();
             });
           
-            var mouseDown = $("#handle").asEventStream("mousedown");
+          var mouseDown = $("#handle").asEventStream("mousedown");
           var mouseUp = $("body").asEventStream("mouseup");
           var mouseMove = $("body").asEventStream("mousemove");
           

@@ -1,0 +1,9 @@
+*.log
+*.exe
+*.lnk
+*.zip
+Vanilla/node_modules/.bin
+Vanilla/node_modules/chai
+Vanilla/node_modules/mocha
+Vanilla/node_modules/radio
+Vanilla/nw
