@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="editor">
+<html lang="en" ng-app="editor"> 
 <head>
     <meta charset="utf-8">
     <title>Bootstrap, from Twitter</title>
@@ -7,18 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Le styles -->
+    <link rel="stylesheet" type="text/css" href="GlobalLayout.css">
     <link rel="stylesheet" type="text/css" href="ThirdParties/Bootstrap/bootstrap.min.css">
   	<link rel="stylesheet" type="text/css" href="ThirdParties/FontAwesome/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="Themes/Tube/global.css" />
     <link rel="stylesheet" type="text/css" href="ThirdParties/FontAwesome/color-button.css">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
     <link rel="stylesheet" href="ThirdParties/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="ThirdParties/codemirror/addon/dialog/dialog.css">
     <link rel="stylesheet" href="ThirdParties/codemirror/theme/monokai.css">
@@ -30,14 +24,16 @@
   <div id="main">
     <div ng-controller="explorerController" id="browser">
         <ul style="position:absolute">
-        <li ng-repeat="folder in folders" ng-include="'tree_item_renderer.html'"></li>
+        <li ng-repeat="folder in folders" ng-include="'Templates/tree_item_renderer.html'"></li>
       </ul>
     </div>
     <div id="handle"></div>
     <div ng-controller="editorController" id="editor">
       <div style="position:absolute">
         <ul class="nav nav-tabs">
-          <li ng-class="{active:i.selected}" ng-repeat="i in documents"><a href="#" ng-click="onTabSelected(i.path)">{{i.name}}</a></li>
+          <li ng-class="{active:i.selected}" ng-repeat="i in documents">
+              <a href="#" ng-click="onTabSelected(i.path)">{{i.name}}<i ng-show="i.modified" class="icon-exclamation-sign" style="color:rgb(131, 106, 63);font-size:14px;margin-left: 12px;"></i></a>
+          </li>
         </ul>
         <div ng-editor />
       </div>
@@ -73,110 +69,9 @@
     <script src="controllers/Editor.js"></script>
     <script src="controllers/Explorer.js"></script>
     <script src="angular.min.js"></script>
-    <script>
-      var radio = require("radio");
-      var modes = {};
-      modes.html = "htmlmixed";
-      modes.js = "javascript";
-      modes.css = "css";
-      modes.xml = "xml";
-      modes.sql = "text/x-sql";
-      
-        angular.module('editor', [])
-               .directive('ngEditor', function () {
-                   return function (scope, element, attrs) {
-                         var docs = [];
-                         var currentDoc;
-
-                         var cm = CodeMirror(element[0], {
-                            theme:"ambiance" ,
-                            lineNumbers: true, 
-                           	indentUnit:4,
-                            highlightSelectionMatches: true,
-                           //gutters: ["CodeMirror-lint-markers"],
-                           //lintWith: CodeMirror.javascriptValidator,
-                            autoCloseTags: true,
-                             extraKeys: {
-                                "Ctrl-S": function(instance) { 
-                                    currentDoc.content = instance.getValue();
-                                    radio("SaveCurrentDocument").broadcast(currentDoc);
-                                },
-                            }
-                        });
-
-                        radio("DocumentSelected").subscribe(function(doc){
-                          currentDoc = doc;
-                          cm.swapDoc(docs[doc.path]);
-                          cm.focus();
-                        });
-
-                        radio("DocumentLoaded").subscribe(function(doc){
-                          var extIdx = doc.path.indexOf(".");
-                          var mode;
-                          if(extIdx >= 0 )mode = modes[ doc.path.substr( extIdx  + 1 ) ];
-                          docs[doc.path] = CodeMirror.Doc(doc.content,mode);
-                        });
-
-                     var resize = function(){
-                        var $element = $(element);
-                        var $parent = $element.closest("#editor");
-                        cm.setSize($parent.width(), $parent.height() - $element.position().top );
-                    };
-                      resize();
-                      radio("Reflow").subscribe(resize);
-
-                   };
-               });
-	
-    </script>
+    <script src="AngularDirectives/Editor.js"></script>
+    <script type="text/ng-template" id="Templates/tree_item_renderer.html"></script>
         
-     <script type="text/ng-template" id="tree_item_renderer.html">
-        <a ng-click="onFolderSelected(folder)"><i style="color:white" ng-class="{'icon-folder-open':folder.expanded,'icon-folder-close':!folder.expanded}"></i><span>{{folder.name}}</span></a>
-        <div ng-show="folder.expanded">
-            <ul>
-                <li ng-repeat="folder in folder.folders" ng-include="'tree_item_renderer.html'"></li>
-            </ul>
-            <ul>
-                <li ng-repeat="file in folder.files">
-                    <a ng-click="onFileSelected(file.path)"><i class="icon-file" style="color:white"></i><span>{{file.name}}</span></a>
-                </li>
-            </ul>
-        </div>
-    </script>
-  
-    <style type="text/css">
-      #main
-      {
-        display:-webkit-flex;
-        border-style: solid;
-        border-color: white;
-        border-width: 2px;
-        -webkit-user-select:none;
-      }
-
-      #browser
-      {
-        -webkit-flex-basis: 300px;
-            /*resize:horizontal;*/
-            position: relative;
-            overflow:auto;
-      }
-      
-      #handle
-      {
-        -webkit-flex-basis: 7px;
-        background-color:#45484c;
-        cursor:w-resize;
-      }
-
-      #editor
-      {
-        -webkit-flex: 1;
-        position: relative;
-      }
-        
-    </style>
-
 
 
       <script type="text/javascript">

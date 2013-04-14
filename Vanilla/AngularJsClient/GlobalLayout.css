@@ -1,0 +1,29 @@
+#main
+{
+  display:-webkit-flex;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  -webkit-user-select:none;
+}
+
+#browser
+{
+  -webkit-flex-basis: 300px;
+      /*resize:horizontal;*/
+      position: relative;
+      overflow:auto;
+}
+
+#handle
+{
+  -webkit-flex-basis: 7px;
+  background-color:#45484c;
+  cursor:w-resize;
+}
+
+#editor
+{
+  -webkit-flex: 1;
+  position: relative;
+}

@@ -7,7 +7,7 @@ var mockFileOpener = function(path){
 				var files = {};
 				files["somefilepath"] = {path:"somefilepath"};
 				return files[path];
-			}
+			} 
 
 function MockFileSaver(){
 	var self = this;

@@ -1,0 +1,11 @@
+        <a ng-click="onFolderSelected(folder)"><i style="color:white" ng-class="{'icon-folder-open':folder.expanded,'icon-folder-close':!folder.expanded}"></i><span>{{folder.name}}</span></a>
+        <div ng-show="folder.expanded">
+            <ul>
+                <li ng-repeat="folder in folder.folders" ng-include="'Templates/tree_item_renderer.html'"></li>
+            </ul>
+            <ul>
+                <li ng-repeat="file in folder.files">
+                    <a ng-click="onFileSelected(file.path)"><i class="icon-file" style="color:white"></i><span>{{file.name}}</span></a>
+                </li>
+            </ul>
+        </div>
