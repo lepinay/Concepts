@@ -24,7 +24,7 @@ function filesLister(path) {
                 }
                 
             })
-            .map(function (f) { return {expanded:false,files:[],folders:[],name:f,path:path+f+"/"} })
+            .map(function (f) { return {expanded:false,files:[],folders:[],name:f,path:path+f+"\\"} })
     };
 };
 
@@ -34,6 +34,15 @@ function fileOpener(path2){
 
 function fileSaver(path,content){
     fs.writeFileSync(path,content);
+}
+
+function getFilename(fileOrFolderPath){
+    if(fs.statSync(fileOrFolderPath).isFile()){
+        return path.basename(fileOrFolderPath);
+    }
+    else{
+        return fileOrFolderPath.substring(fileOrFolderPath.lastIndexOf("\\")+1);
+    }
 }
 
 

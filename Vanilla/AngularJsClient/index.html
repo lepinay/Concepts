@@ -32,7 +32,7 @@
       <div style="position:absolute">
         <ul class="nav nav-tabs">
           <li ng-class="{active:i.selected}" ng-repeat="i in documents">
-              <a href="#" ng-click="onTabSelected(i.path)">{{i.name}}<i ng-show="i.modified" class="icon-exclamation-sign" style="color:rgb(131, 106, 63);font-size:14px;margin-left: 12px;"></i></a>
+              <a href="#" ng-click="onTabSelected(i.path)">{{i.name}}<i ng-show="i.modified" class="icon-exclamation-sign" style="color:rgb(175, 45, 45);font-size:14px;margin-left: 12px;"></i></a>
           </li>
         </ul>
         <div ng-editor />
@@ -76,6 +76,17 @@
 
       <script type="text/javascript">
         $(function(){
+            window.ondragover = function(e) { e.preventDefault(); return false };
+        	window.ondrop = function(e) { e.preventDefault(); return false };
+            
+            document.getElementById('browser').ondrop = function(e){
+                e.preventDefault();
+                for (var i = 0; i < e.dataTransfer.files.length; ++i) {
+                    radio("FilesDropedOnExplorer").broadcast(e.dataTransfer.files[i].path);
+                }
+                return false;
+        	};
+
           $(window).resize(function(){
             var w = $(window);
             var main = $("#main");
@@ -107,6 +118,14 @@
           radio("DocumentSelected").subscribe(function(d){
             $("title").html(d.path);
           });
+
+          var gui = require('nw.gui');
+          gui.Window.get().on('close', function(e) {
+              this.hide();
+              radio("ApplicationClosing").broadcast();
+              this.close(true);
+         });
+            
           
         });
       </script>

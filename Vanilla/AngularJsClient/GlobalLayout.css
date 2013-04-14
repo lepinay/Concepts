@@ -1,9 +1,6 @@
 #main
 {
   display:-webkit-flex;
-  border-style: solid;
-  border-color: white;
-  border-width: 2px;
   -webkit-user-select:none;
 }
 
