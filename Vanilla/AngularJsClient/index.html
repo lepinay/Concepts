@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="editor"> 
-<head>
-    <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <title>Bootstrap, from Twitter</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+    
+        <link rel="stylesheet" type="text/css" href="GlobalLayout.css">
+        <link rel="stylesheet" type="text/css" href="ThirdParties/Bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="ThirdParties/FontAwesome/font-awesome.css">
+        <link type="text/css" rel="stylesheet" href="Themes/Tube/global.css" />
+        <link rel="stylesheet" type="text/css" href="ThirdParties/FontAwesome/color-button.css">
+    
+        <link rel="stylesheet" href="ThirdParties/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="ThirdParties/codemirror/addon/dialog/dialog.css">
+        <link rel="stylesheet" href="ThirdParties/codemirror/theme/monokai.css">
+        <link rel="stylesheet" href="ThirdParties/codemirror/theme/ambiance.css">
+        <link rel="stylesheet" href="ThirdParties/codemirror/addon/lint/lint.css">
+    </head>
 
-    <link rel="stylesheet" type="text/css" href="GlobalLayout.css">
-    <link rel="stylesheet" type="text/css" href="ThirdParties/Bootstrap/bootstrap.min.css">
-  	<link rel="stylesheet" type="text/css" href="ThirdParties/FontAwesome/font-awesome.css">
-    <link type="text/css" rel="stylesheet" href="Themes/Tube/global.css" />
-    <link rel="stylesheet" type="text/css" href="ThirdParties/FontAwesome/color-button.css">
-
-    <link rel="stylesheet" href="ThirdParties/codemirror/lib/codemirror.css">
-    <link rel="stylesheet" href="ThirdParties/codemirror/addon/dialog/dialog.css">
-    <link rel="stylesheet" href="ThirdParties/codemirror/theme/monokai.css">
-  	<link rel="stylesheet" href="ThirdParties/codemirror/theme/ambiance.css">
-    <link rel="stylesheet" href="ThirdParties/codemirror/addon/lint/lint.css">
-</head>
-
-<body style="overflow:hidden">
-  <div id="main">
-    <div ng-controller="explorerController" id="browser">
-        <ul style="position:absolute">
-        <li ng-repeat="folder in folders" ng-include="'Templates/tree_item_renderer.html'"></li>
-      </ul>
-    </div>
-    <div id="handle"></div>
-    <div ng-controller="editorController" id="editor">
-      <div style="position:absolute">
-        <ul class="nav nav-tabs">
-          <li ng-class="{active:i.selected}" ng-repeat="i in documents">
-              <a href="#" ng-click="onTabSelected(i.path)">{{i.name}}<i ng-show="i.modified" class="icon-exclamation-sign" style="color:rgb(175, 45, 45);font-size:14px;margin-left: 12px;"></i></a>
-          </li>
-        </ul>
-        <div ng-editor />
+    <body style="overflow:hidden">
+      <div id="main">
+        <div ng-controller="explorerController" id="browser">
+            <ul style="position:absolute">
+            <li ng-repeat="folder in folders" ng-include="'Templates/tree_item_renderer.html'"></li>
+          </ul>
+        </div>
+        <div id="handle"></div>
+        <div ng-controller="editorController" id="editor">
+          <div style="position:absolute">
+            <ul class="nav nav-tabs">
+              <li ng-class="{active:i.selected}" ng-repeat="i in documents">
+                  <a href="#" ng-click="onTabSelected(i.path)">{{i.name}}<i ng-show="i.modified" class="icon-exclamation-sign" style="color:rgb(175, 45, 45);font-size:14px;margin-left: 12px;"></i></a>
+              </li>
+            </ul>
+            <div ng-editor />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</body>
+    </body>
 
-  <script src="ThirdParties/jshint.js"></script>
-  <script src="ThirdParties/codemirror/lib/codemirror.js"></script>
-  <script src="ThirdParties/codemirror/addon/lint/lint.js"></script>
-  <script src="ThirdParties/codemirror/addon/lint/javascript-lint.js"></script>
-  <script src="ThirdParties/codemirror/addon/lint/json-lint.js"></script>
-  <script src="ThirdParties/codemirror/addon/search/search.js"></script>
-  <script src="ThirdParties/codemirror/addon/search/searchcursor.js"></script>
-  <script src="ThirdParties/codemirror/addon/dialog/dialog.js"></script>
-  <script src="ThirdParties/codemirror/addon/edit/closetag.js"></script>
-  <script src="ThirdParties/codemirror/addon/search/match-highlighter.js"></script>
-  <script src="ThirdParties/codemirror/mode/javascript/javascript.js"></script>
-  <script src="ThirdParties/codemirror/mode/css/css.js"></script>
-  <script src="ThirdParties/codemirror/mode/xml/xml.js"></script>
-  <script src="ThirdParties/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-  <script src="ThirdParties/codemirror/mode/sql/sql.js"></script>
-  
-  <script src="ThirdParties/jquery-1.9.1.min.js"></script>
-  <script src="ThirdParties/bacon.js"></script>
-  
-  <script src="../Infrastructure/NodeFilesAccess.js"></script>        
-
+    <script src="ThirdParties/jshint.js"></script>
+    <script src="ThirdParties/codemirror/lib/codemirror.js"></script>
+    <script src="ThirdParties/codemirror/addon/lint/lint.js"></script>
+    <script src="ThirdParties/codemirror/addon/lint/javascript-lint.js"></script>
+    <script src="ThirdParties/codemirror/addon/lint/json-lint.js"></script>
+    <script src="ThirdParties/codemirror/addon/search/search.js"></script>
+    <script src="ThirdParties/codemirror/addon/search/searchcursor.js"></script>
+    <script src="ThirdParties/codemirror/addon/dialog/dialog.js"></script>
+    <script src="ThirdParties/codemirror/addon/edit/closetag.js"></script>
+    <script src="ThirdParties/codemirror/addon/search/match-highlighter.js"></script>
+    <script src="ThirdParties/codemirror/mode/javascript/javascript.js"></script>
+    <script src="ThirdParties/codemirror/mode/css/css.js"></script>
+    <script src="ThirdParties/codemirror/mode/xml/xml.js"></script>
+    <script src="ThirdParties/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="ThirdParties/codemirror/mode/sql/sql.js"></script>
+    
+    <script src="ThirdParties/jquery-1.9.1.min.js"></script>
+    <script src="ThirdParties/bacon.js"></script>
+    
+    <script src="../Infrastructure/NodeFilesAccess.js"></script>        
+    
     <script src="ThirdParties/Bootstrap/bootstrap.min.js"></script>
     <script src="Themes/Tube/custom.js"></script>
-
+    
     
     <script src="controllers/Editor.js"></script>
     <script src="controllers/Explorer.js"></script>
     <script src="angular.min.js"></script>
     <script src="AngularDirectives/Editor.js"></script>
     <script type="text/ng-template" id="Templates/tree_item_renderer.html"></script>
-        
-
-
-      <script type="text/javascript">
+    
+    
+    
+    <script type="text/javascript">
         $(function(){
             window.ondragover = function(e) { e.preventDefault(); return false };
-        	window.ondrop = function(e) { e.preventDefault(); return false };
+            window.ondrop = function(e) { e.preventDefault(); return false };
             
             document.getElementById('browser').ondrop = function(e){
                 e.preventDefault();
@@ -85,49 +85,49 @@
                     radio("FilesDropedOnExplorer").broadcast(e.dataTransfer.files[i].path);
                 }
                 return false;
-        	};
-
-          $(window).resize(function(){
-            var w = $(window);
-            var main = $("#main");
-            main.width(w.width());
-            main.height(w.height());
-            radio("Reflow").broadcast();
-          });
+            };
+            
+            $(window).resize(function(){
+                var w = $(window);
+                var main = $("#main");
+                main.width(w.width());
+                main.height(w.height());
+                radio("Reflow").broadcast();
+            });
             
             $("#browser").resize(function(){
                 alert("resized");
                 radio("Reflow").broadcast();
             });
-          
-          var mouseDown = $("#handle").asEventStream("mousedown");
-          var mouseUp = $("body").asEventStream("mouseup");
-          var mouseMove = $("body").asEventStream("mousemove");
-          
-          mouseDown.onValue(function(e){
-            var lastx = e.clientX;
-            mouseMove.takeUntil(mouseUp).onValue(function(e){
-              var delta = (e.clientX - lastx);
-              lastx = e.clientX;
-              var browser = $("#browser");
-              browser.css("-webkit-flex-basis", (browser.width() + delta)+"px");
-              radio("Reflow").broadcast();
-            });
-          });
-          
-          radio("DocumentSelected").subscribe(function(d){
-            $("title").html(d.path);
-          });
-
-          var gui = require('nw.gui');
-          gui.Window.get().on('close', function(e) {
-              this.hide();
-              radio("ApplicationClosing").broadcast();
-              this.close(true);
-         });
             
-          
+            var mouseDown = $("#handle").asEventStream("mousedown");
+            var mouseUp = $("body").asEventStream("mouseup");
+            var mouseMove = $("body").asEventStream("mousemove");
+            
+            mouseDown.onValue(function(e){
+                var lastx = e.clientX;
+                mouseMove.takeUntil(mouseUp).onValue(function(e){
+                    var delta = (e.clientX - lastx);
+                    lastx = e.clientX;
+                    var browser = $("#browser");
+                    browser.css("-webkit-flex-basis", (browser.width() + delta)+"px");
+                    radio("Reflow").broadcast();
+                });
+            });
+            
+            radio("DocumentSelected").subscribe(function(d){
+                $("title").html(d.path);
+            });
+            
+            var gui = require('nw.gui');
+            gui.Window.get().on('close', function(e) {
+                this.hide();
+                radio("ApplicationClosing").broadcast();
+                this.close(true);
+            });
+            
+            
         });
-      </script>
+    </script>
 
 </html>
