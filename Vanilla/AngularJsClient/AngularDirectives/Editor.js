@@ -50,7 +50,7 @@ angular.module('editor', [])
             docs[doc.path] = CodeMirror.Doc(doc.content,mode);
         });
        
-        document.getElementById('main').ondrop = function(e){
+        document.getElementById('editor').ondrop = function(e){
             e.preventDefault();
             scope.$apply(function(){
                 for (var i = 0; i < e.dataTransfer.files.length; ++i) {

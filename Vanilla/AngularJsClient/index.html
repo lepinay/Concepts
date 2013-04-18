@@ -82,7 +82,7 @@
             document.getElementById('browser').ondrop = function(e){
                 e.preventDefault();
                 for (var i = 0; i < e.dataTransfer.files.length; ++i) {
-                    radio("FilesDropedOnExplorer").broadcast(e.dataTransfer.files[i].path);
+                    radio("Angular.FilesDropedOnExplorer").broadcast(e.dataTransfer.files[i].path);
                 }
                 return false;
             };

@@ -34,6 +34,12 @@ function fileOpener(path2){
 
 function fileSaver(path,content){
     fs.writeFileSync(path,content);
+    fs.watchFile(path, function (curr, prev) {
+        if (+curr.mtime !== +prev.mtime){
+  			console.log('the current mtime is: ' + curr.mtime);
+  			console.log('the previous mtime was: ' + prev.mtime);
+        }
+	});
 }
 
 function getFilename(fileOrFolderPath){
