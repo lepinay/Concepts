@@ -28,9 +28,9 @@
           </ul>
         </div>
         <div id="handle"></div>
-        <div ng-controller="editorController" id="editor">
+        <div id="editor">
           <div style="position:absolute">
-            <ul class="nav nav-tabs">
+            <ul ng-controller="tabsController" class="nav nav-tabs">
               <li ng-class="{active:i.selected}" ng-repeat="i in documents">
                   <a href="#" ng-click="onTabSelected(i.path)">{{i.name}}<i ng-show="i.modified" class="icon-exclamation-sign" style="color:rgb(175, 45, 45);font-size:14px;margin-left: 12px;"></i></a>
               </li>
@@ -68,6 +68,7 @@
     
     <script src="controllers/Editor.js"></script>
     <script src="controllers/Explorer.js"></script>
+    <script src="controllers/Tabs.js"></script>
     <script src="angular.min.js"></script>
     <script src="AngularDirectives/Editor.js"></script>
     <script type="text/ng-template" id="Templates/tree_item_renderer.html"></script>
